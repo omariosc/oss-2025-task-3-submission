@@ -1,0 +1,51 @@
+# Configuration for Surgical Keypoint Tracking Pipeline
+# EndoVis 2025 Task 3
+
+# Input/Output paths
+input_dir: '../data/val/frames'
+output_dir: 'output/tracking_results'
+
+# Detection settings
+detection_method: 'segmentation_guided'  # ultra_dense, segmentation_guided, yolo
+segmentation_model: 'models/yolo11m_segmentation.pt'
+yolo_model: 'models/yolo11m_detection.pt'
+keypoint_model: 'models/yolo_keypoints.pt'
+custom_keypoint_model: 'models/custom_keypoint_model.pth'
+
+# Ultra-dense detection parameters
+grid_sizes: 
+  - [64, 48]    # Reduced for demo speed
+  - [32, 24]
+segmentation_weight: 15.0
+refinement_factor: 2.0
+min_confidence: 0.1
+
+# Tracking settings
+tracker_type: 'hota_optimized'  # bytetrack, keypoint, hota_optimized
+track_thresh: 0.3
+match_thresh: 0.8
+track_buffer: 30
+min_hits: 3
+
+# HOTA optimization parameters
+detection_weight: 0.35
+association_weight: 0.65
+temporal_window: 5
+
+# Preprocessing
+enable_preprocessing: true
+intensity_normalization: true
+clahe_enabled: true
+clahe_clip_limit: 2.0
+denoise_enabled: true
+denoise_method: 'bilateral'
+
+# Visualization
+save_visualizations: true
+save_videos: true
+fps: 10
+visualization_scale: 1.0
+
+# Evaluation
+evaluate: true
+ground_truth_dir: '../data/val/mot'
